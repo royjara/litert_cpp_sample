@@ -1,0 +1,232 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Simple CPU",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/simple_debug_example_debug",
+            "args": [
+                "${workspaceFolder}/test_model.tflite",
+                "5"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "DEBUG_MODE",
+                    "value": "1"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "settings set target.x86-disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build_simple_debug",
+            "miDebuggerPath": "/usr/bin/lldb-mi",
+            "targetArchitecture": "arm64"
+        },
+        {
+            "name": "Debug Simple GPU (Metal)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/simple_debug_example_metal_metal_debug",
+            "args": [
+                "${workspaceFolder}/test_model.tflite",
+                "5"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "DEBUG_MODE",
+                    "value": "1"
+                },
+                {
+                    "name": "USE_METAL_SIMULATION",
+                    "value": "1"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "build_simple_debug",
+            "miDebuggerPath": "/usr/bin/lldb-mi",
+            "targetArchitecture": "arm64"
+        },
+        {
+            "name": "Debug LiteRT CPU",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/litert_inference_example",
+            "args": [
+                "${workspaceFolder}/test_model.tflite",
+                "5"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "LITERT_LOG_LEVEL",
+                    "value": "INFO"
+                },
+                {
+                    "name": "DYLD_LIBRARY_PATH",
+                    "value": "${workspaceFolder}/build:${env:DYLD_LIBRARY_PATH}"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "settings set target.x86-disassembly-flavor intel",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Load LiteRT debugging helpers",
+                    "text": "command script import ${workspaceFolder}/.vscode/litert_debug.py",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build_debug",
+            "miDebuggerPath": "/usr/bin/lldb-mi",
+            "targetArchitecture": "arm64",
+            "logging": {
+                "engineLogging": true,
+                "programOutput": true
+            }
+        },
+        {
+            "name": "Debug LiteRT GPU (Metal)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/litert_inference_example",
+            "args": [
+                "${workspaceFolder}/test_model.tflite",
+                "5"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "LITERT_LOG_LEVEL",
+                    "value": "INFO"
+                },
+                {
+                    "name": "LITERT_ENABLE_GPU",
+                    "value": "1"
+                },
+                {
+                    "name": "METAL_DEVICE_WRAPPER_TYPE",
+                    "value": "1"
+                },
+                {
+                    "name": "DYLD_LIBRARY_PATH",
+                    "value": "${workspaceFolder}/build:${env:DYLD_LIBRARY_PATH}"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Enable Metal debugging",
+                    "text": "env METAL_DEBUG_LAYER=1",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Load LiteRT debugging helpers",
+                    "text": "command script import ${workspaceFolder}/.vscode/litert_debug.py",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build_debug",
+            "miDebuggerPath": "/usr/bin/lldb-mi",
+            "targetArchitecture": "arm64"
+        },
+        {
+            "name": "Debug Bazel CPU",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/../../bazel-bin/examples/cpp_inference/litert_inference_example_debug",
+            "args": [
+                "${workspaceFolder}/test_model.tflite",
+                "5"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "LITERT_LOG_LEVEL",
+                    "value": "INFO"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Load LiteRT debugging helpers",
+                    "text": "command script import ${workspaceFolder}/.vscode/litert_debug.py",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build_bazel_debug",
+            "miDebuggerPath": "/usr/bin/lldb-mi",
+            "targetArchitecture": "arm64"
+        },
+        {
+            "name": "Profile CPU Performance",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/litert_inference_example",
+            "args": [
+                "${workspaceFolder}/test_model.tflite",
+                "100"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "LITERT_LOG_LEVEL",
+                    "value": "WARNING"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "build_release"
+        },
+        {
+            "name": "Profile GPU Performance",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/litert_inference_example",
+            "args": [
+                "${workspaceFolder}/test_model.tflite",
+                "100"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "LITERT_LOG_LEVEL",
+                    "value": "WARNING"
+                },
+                {
+                    "name": "LITERT_ENABLE_GPU",
+                    "value": "1"
+                },
+                {
+                    "name": "METAL_PERFORMANCE_HUD",
+                    "value": "1"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "build_release"
+        }
+    ]
+}

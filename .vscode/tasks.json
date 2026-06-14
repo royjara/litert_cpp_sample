@@ -1,0 +1,241 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build_simple_debug",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-S", ".",
+                "-B", "build",
+                "-f", "CMakeLists_simple.txt",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_CXX_COMPILER=/usr/bin/clang++",
+                "-DCMAKE_C_COMPILER=/usr/bin/clang",
+                "-DCMAKE_OSX_ARCHITECTURES=arm64"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Build simple debugging example",
+            "dependsOn": "compile_simple_debug"
+        },
+        {
+            "label": "compile_simple_debug",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build", "build",
+                "--config", "Debug",
+                "--parallel", "8"
+            ],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always"
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "cmake_configure_debug",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-S", ".",
+                "-B", "build",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_CXX_COMPILER=/usr/bin/clang++",
+                "-DCMAKE_C_COMPILER=/usr/bin/clang",
+                "-DCMAKE_OSX_ARCHITECTURES=arm64",
+                "-DLITERT_ENABLE_GPU=ON",
+                "-DLITERT_ENABLE_METAL=ON"
+            ],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Configure CMake for debug build with ARM64 and Metal support"
+        },
+        {
+            "label": "cmake_compile_debug",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build", "build",
+                "--config", "Debug",
+                "--parallel", "8"
+            ],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Compile the debug build",
+            "dependsOn": "cmake_configure_debug"
+        },
+        {
+            "label": "build_debug",
+            "type": "shell",
+            "command": "echo",
+            "args": ["Debug build completed"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": "cmake_compile_debug",
+            "detail": "Complete debug build (configure + compile)"
+        },
+        {
+            "label": "build_release",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-S", ".",
+                "-B", "build",
+                "-DCMAKE_BUILD_TYPE=Release",
+                "-DCMAKE_CXX_COMPILER=/usr/bin/clang++",
+                "-DCMAKE_C_COMPILER=/usr/bin/clang",
+                "-DCMAKE_OSX_ARCHITECTURES=arm64",
+                "-DLITERT_ENABLE_GPU=ON",
+                "-DLITERT_ENABLE_METAL=ON"
+            ],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Configure and build release version",
+            "dependsOn": "cmake_compile_release"
+        },
+        {
+            "label": "cmake_compile_release",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build", "build",
+                "--config", "Release",
+                "--parallel", "8"
+            ],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always"
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "build_bazel_debug",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "build",
+                "//examples/cpp_inference:litert_inference_example_debug",
+                "--compilation_mode=dbg",
+                "--strip=never",
+                "--copt=-g3",
+                "--copt=-O0",
+                "--linkopt=-g"
+            ],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/../.."
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Build debug version using Bazel"
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "rm",
+            "args": ["-rf", "build"],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent"
+            },
+            "detail": "Clean build directory"
+        },
+        {
+            "label": "run_cpu",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/litert_inference_example",
+            "args": ["${workspaceFolder}/test_model.tflite", "10"],
+            "group": "test",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            },
+            "dependsOn": "build_release",
+            "detail": "Run CPU inference test"
+        },
+        {
+            "label": "download_test_model",
+            "type": "shell",
+            "command": "curl",
+            "args": [
+                "-L",
+                "-o", "test_model.tflite",
+                "https://tfhub.dev/google/lite-model/imagenet/mobilenet_v2_100_224/classification/2/metadata/1?lite-format=tflite"
+            ],
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always"
+            },
+            "detail": "Download test model for inference"
+        }
+    ]
+}

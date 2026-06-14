@@ -1,0 +1,64 @@
+{
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.default.intelliSenseMode": "macos-clang-arm64",
+    "C_Cpp.default.compilerPath": "/usr/bin/clang++",
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/../../litert",
+        "${workspaceFolder}/build/include",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+    ],
+    "C_Cpp.default.defines": [
+        "LITERT_ENABLE_COMPILED_MODEL=1",
+        "LITERT_ENABLE_GPU=1",
+        "LITERT_ENABLE_METAL=1",
+        "LITERT_ENABLE_COREML=1"
+    ],
+    "C_Cpp.default.macFrameworkPath": [
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+    ],
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    "cmake.configureSettings": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++",
+        "CMAKE_C_COMPILER": "/usr/bin/clang",
+        "CMAKE_OSX_ARCHITECTURES": "arm64",
+        "LITERT_ENABLE_GPU": "ON",
+        "LITERT_ENABLE_METAL": "ON"
+    },
+    "cmake.defaultVariants": {
+        "buildType": {
+            "default": "debug",
+            "choices": {
+                "debug": {
+                    "short": "Debug",
+                    "long": "Debug build with symbols",
+                    "buildType": "Debug"
+                },
+                "release": {
+                    "short": "Release",
+                    "long": "Optimized release build",
+                    "buildType": "Release"
+                }
+            }
+        }
+    },
+    "files.associations": {
+        "*.h": "c",
+        "*.hpp": "cpp",
+        "*.cpp": "cpp",
+        "*.cc": "cpp",
+        "*.tcc": "cpp",
+        "litert_*.h": "c",
+        "*.tflite": "binary"
+    },
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "lldb.showDisassembly": "auto",
+    "lldb.dereferencePointers": true,
+    "lldb.suppressMissingSourceFiles": true,
+    "debug.allowBreakpointsEverywhere": true,
+    "debug.terminal.clearBeforeReusing": true
+}

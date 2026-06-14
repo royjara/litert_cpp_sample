@@ -1,0 +1,33 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "Mac ARM64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/../../litert/**",
+                "${workspaceFolder}/build/include/**",
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/**",
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/**"
+            ],
+            "defines": [
+                "LITERT_ENABLE_COMPILED_MODEL=1",
+                "LITERT_ENABLE_GPU=1",
+                "LITERT_ENABLE_METAL=1",
+                "LITERT_ENABLE_COREML=1",
+                "__APPLE__",
+                "__MACH__",
+                "_DEBUG"
+            ],
+            "macFrameworkPath": [
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-arm64",
+            "configurationProvider": "ms-vscode.cmake-tools",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
+        }
+    ]
+}
